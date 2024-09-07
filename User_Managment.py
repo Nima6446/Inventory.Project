@@ -1,0 +1,55 @@
+import sqlite3
+
+
+class User_Manager:
+    def __init__(self, db_manager):
+        self.db_manager = db_manager
+
+    def authenticate_user(self, username, password):
+        try:
+            self.db_manager.cursor.execute('SELECT role, password FROM users WHERE username = ?', (username,))
+            user = self.db_manager.cursor.fetchone()
+            if user and user[1] == password:  # تغییر: بررسی رمز عبور
+                return user[0]
+            return None
+        except sqlite3.Error as erorr:
+            print(f"خطا در تایید کاربر: {erorr}")
+            print("//////////////////////////////////")
+            return None
+
+    def add_user(self, username, password, role):
+        try:
+            self.db_manager.cursor.execute('''
+            INSERT INTO Users (username, password, role) 
+            VALUES (?, ?, ?)
+            ''', (username, password, role))
+            self.db_manager.commit()
+            print("کاربر با موفقیت اضافه شد.")
+        except sqlite3.Error as error:
+            print(f"خطا در اضافه کردن کاربر: {error}")
+
+    def delete_user(self, User_ID):
+        try:
+            self.db_manager.cursor.execute('''
+            DELETE FROM Users WHERE ID = ?
+            ''', (User_ID,))
+            self.db_manager.commit()
+            print("کاربر با موفقیت حذف شد.")
+        except sqlite3.Error as error:
+            print(f"خطا در حذف کاربر: {error}")
+
+    def show_all_users(self):
+        try:
+            self.db_manager.cursor.execute('''
+            SELECT id, username, role FROM Users
+            ''')
+            users = self.db_manager.cursor.fetchall()
+            if users:
+                print("لیست کاربران:")
+                for User in users:
+                    print(f'User ID: {User[0]}, Username: {User[1]}, Role: {User[2]}')
+            else:
+                print("هیچ کاربری در سیستم وجود ندارد.")
+
+        except sqlite3.Error as error:
+            print(f"خطا در نمایش کاربران: {error}")

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SqlDialectMappings">
+    <file url="file://$PROJECT_DIR$/Brand_Managment.py" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/Category_Managment.py" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/Database_Managment.py" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/Order_Managment.py" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/Product_Managment.py" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/User_Managment.py" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/../final2/3.py" dialect="GenericSQL" />
+  </component>
+</project>
