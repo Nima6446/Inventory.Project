@@ -1,3 +1,4 @@
+import bcrypt
 import sqlite3
 
 
@@ -9,20 +10,20 @@ class User_Manager:
         try:
             self.db_manager.cursor.execute('SELECT role, password FROM users WHERE username = ?', (username,))
             user = self.db_manager.cursor.fetchone()
-            if user and user[1] == password:  # تغییر: بررسی رمز عبور
+            if user and bcrypt.checkpw(password.encode('utf-8'), user[1].encode('utf-8')):
                 return user[0]
             return None
-        except sqlite3.Error as erorr:
-            print(f"خطا در تایید کاربر: {erorr}")
-            print("//////////////////////////////////")
+        except sqlite3.Error as error:
+            print(f"خطا در تایید کاربر: {error}")
             return None
 
     def add_user(self, username, password, role):
         try:
+            hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
             self.db_manager.cursor.execute('''
             INSERT INTO Users (username, password, role) 
             VALUES (?, ?, ?)
-            ''', (username, password, role))
+            ''', (username, hashed_password.decode('utf-8'), role))
             self.db_manager.commit()
             print("کاربر با موفقیت اضافه شد.")
         except sqlite3.Error as error:
@@ -50,6 +51,5 @@ class User_Manager:
                     print(f'User ID: {User[0]}, Username: {User[1]}, Role: {User[2]}')
             else:
                 print("هیچ کاربری در سیستم وجود ندارد.")
-
         except sqlite3.Error as error:
             print(f"خطا در نمایش کاربران: {error}")

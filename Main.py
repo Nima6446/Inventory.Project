@@ -1,8 +1,8 @@
-from Database_Managment import Database_Manager
-from Category_Managment import Category_Manager
 from Brand_Managment import Brand_Manager
-from Product_Managment import Product_Manager
+from Category_Managment import Category_Manager
+from Database_Managment import Database_Manager
 from Order_Managment import Order_Manager
+from Product_Managment import Product_Manager
 from User_Managment import User_Manager
 
 db = Database_Manager(r'E:\Terminal\Inventory_Managment\inventory.db')

@@ -46,8 +46,8 @@ class Database_Manager:
         self.cursor.execute('''
         CREATE TABLE IF NOT EXISTS Users(
             ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-            username TEXT NOT NULL,
-            password TEXT NOT NULL,
+            username TEXT UNIQUE NOT NULL,
+            password  NOT NULL,
             role TEXT NOT NULL
             )
         ''')
